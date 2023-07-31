@@ -1,0 +1,39 @@
+* Anyline
+
+Anyline is a collection of modules for Unix bars that automatically refresh their colors based on changes to the Pywal cache. This enables the modules to adapt seamlessly to any Pywal theme.
+
+** Structure
+
+The project is organized into separate modules that can be added to any bar. Currently, there are three modules available:
+
+- Cores
+- Web
+- Xmv
+
+Each module resides in its own directory and has its own Python environment.
+
+#+BEGIN_SRC
+.
+├── cores
+│   ├── env
+│   └── main.py
+├── web
+│   ├── env
+│   └── main.py
+└── xmv
+    ├── env
+    └── main.py
+#+END_SRC
+
+** Usage
+
+1. Clone this repository: =git clone https://github.com/yourusername/anyline.git=
+2. Navigate into the directory of the module you want to use.
+3. Activate the Python environment: =source env/bin/activate=
+4. Run the =main.py= script to start the module.
+
+** Notes
+
+The modules automatically update their colors based on changes in the Pywal cache. Therefore, each time you change your Pywal theme, the modules will update accordingly.
+
+Enjoy a dynamic and colorful Unix bar with Anyline!
