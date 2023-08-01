@@ -88,4 +88,3 @@ class ColorGridWindow(Gtk.Window):
 if __name__ == "__main__":
     colorGridWindow = ColorGridWindow()
     colorGridWindow.run()
-
