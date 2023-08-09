@@ -120,9 +120,9 @@ if __name__ == "__main__":
 
 
 
-# THEME 2
-# ONLYMIC
-# SMOOTH
+#THEME 2
+#ONLYMIC
+#SMOOTH
 # import os
 # import numpy as np
 # import matplotlib.pyplot as plt

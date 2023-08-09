@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 # TODO:
-# make it use the same color as xmobar []
-# as an option not default
+# make it use the same color as xmobar [x]
 
 import os
 import gi

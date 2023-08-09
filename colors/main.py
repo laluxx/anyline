@@ -7,6 +7,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 from gi.repository import Gtk, Gdk, GLib
 
+
 CONFIG = {
     'update_interval': 500,  # Update interval for the plot in milliseconds
     'border_width': 2,       # Border width for the grid
