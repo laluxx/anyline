@@ -14,7 +14,7 @@ from gi.repository import Gtk, Gdk, GLib
 
 CONFIG = {
     'update_interval': 1000,  # Update interval for the plot in milliseconds
-    'color': 4,  # The index of the color in the pywal color scheme to use
+    'color': 3,  # The index of the color in the pywal color scheme to use
     'window_width': 30,  # The width of the window
     'window_height': 18,  # The height of the window
     'window_pos_x': 1166,  # The x-coordinate of the window position
