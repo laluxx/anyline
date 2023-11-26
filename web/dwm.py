@@ -1,4 +1,3 @@
-# Good looking
 import os
 import gi
 import psutil
@@ -12,10 +11,10 @@ import collections
 from scipy.interpolate import CubicSpline
 
 CONFIG = {
-    'buffer_size': 60, # Network usage buffer size
-    'update_interval': 1000, # Update interval for the plot in milliseconds
-    'color_indices': [0, 3, 6, 9], # Indices of colors to use from the wal cache
-    'num_points': 50, # Number of points in the graph
+    'buffer_size': 60,
+    'update_interval': 1000,
+    'color_indices': [0, 3, 6, 9],
+    'num_points': 50,
 }
 
 class MyHandler(FileSystemEventHandler):
@@ -36,9 +35,9 @@ class NetworkStatWindow(Gtk.Window):
 
         self.set_keep_above(True)
         self.set_decorated(False)
-        self.set_default_size(474, 23)
+        self.set_default_size(474, 22)
         self.set_type_hint(Gdk.WindowTypeHint.DOCK)
-        self.move(426, 0)
+        self.move(1426, 0)
 
         self.fig, self.ax = plt.subplots()
         self.canvas = FigureCanvas(self.fig)
@@ -48,6 +47,14 @@ class NetworkStatWindow(Gtk.Window):
 
         self.update_colors()
         self.update_plot()
+
+        # Connect to the realize signal
+        self.connect("realize", self.on_realize)
+
+    def on_realize(self, widget):
+        gdk_window = widget.get_window()
+        if gdk_window:
+            gdk_window.set_override_redirect(True)
 
     def hex_to_rgb(self, color):
         color = color.lstrip('#')
@@ -98,6 +105,7 @@ class NetworkStatWindow(Gtk.Window):
 
         self.connect("destroy", Gtk.main_quit)
         self.show_all()
+
         Gtk.main()
 
 if __name__ == "__main__":

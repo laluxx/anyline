@@ -1,0 +1,78 @@
+import sys
+import argparse
+import os
+from gi.repository import Gtk, Gdk, GdkPixbuf, GLib
+
+def hex_to_rgba(color):
+    color = color.lstrip('#')
+    return tuple(int(color[i:i+2], 16) / 255 for i in (0, 2, 4)) + (0.5, )
+
+def get_wal_first_color():
+    with open(os.path.expanduser('~/.cache/wal/colors'), 'r') as f:
+        return f.readline().strip()
+
+def on_button_clicked(button, window):
+    def move_window_down():
+        x, y = window.get_position()
+        if y > screen_height:  # Assuming screen_height is determined globally or passed to this function
+            Gtk.main_quit()
+            return False
+        window.move(x, y + 5)
+        return True
+
+    # Start animation every 10 milliseconds
+    GLib.timeout_add(10, move_window_down)
+
+def create_popup(x, y, center, dark_overlay):
+    global screen_height  # Making it global for simplicity, consider refactoring
+
+    window = Gtk.Window()
+    window.set_decorated(False)
+    window.set_keep_above(True)
+
+    if dark_overlay:
+        color = get_wal_first_color()
+        rgba = Gdk.RGBA(*hex_to_rgba(color))
+        window.override_background_color(Gtk.StateType.NORMAL, rgba)
+        window.set_opacity(0.7)
+
+    # Load the PNG image
+    image = Gtk.Image()
+    pixbuf = GdkPixbuf.Pixbuf.new_from_file("path_to_your_image.png")
+    image.set_from_pixbuf(pixbuf)
+    window.add(image)
+
+    # If centered
+    screen = window.get_screen()
+    monitor = screen.get_primary_monitor()
+    geometry = screen.get_monitor_geometry(monitor)
+    screen_height = geometry.height
+
+    if center:
+        x = geometry.width // 2 - window.get_default_size()[0] // 2
+        y = geometry.height // 2 - window.get_default_size()[1] // 2
+
+    window.move(x, y)
+
+    # Define clickable region
+    button = Gtk.Button.new()
+    button.set_size_request(100, 50)  # Width and height of the clickable region
+    button.connect("clicked", on_button_clicked, window)
+    button.set_relief(Gtk.ReliefStyle.NONE)
+    button.set_opacity(0.0)  # Make button invisible
+    window.add(button)
+
+    window.connect("destroy", Gtk.main_quit)
+    window.show_all()
+    Gtk.main()
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Create a popup.')
+    parser.add_argument('-x', type=int, default=0, help='x-coordinate')
+    parser.add_argument('-y', type=int, default=0, help='y-coordinate')
+    parser.add_argument('--center', action='store_true', help='Center the popup')
+    parser.add_argument('--dark-overlay', action='store_true', help='Use dark overlay from wal color scheme')
+
+    args = parser.parse_args()
+
+    create_popup(args.x, args.y, args.center, args.dark_overlay)

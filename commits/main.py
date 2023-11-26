@@ -13,9 +13,9 @@ from watchdog.events import FileSystemEventHandler
 CONFIG = {
     'update_interval': 5000,
     'github_username': 'laluxx',
-    'window_position_x': 870,
+    'window_position_x': 950,
     'window_position_y': 0,
-    'personal_access_token': ''
+    'personal_access_token': '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'
 }
 
 class MyHandler(FileSystemEventHandler):
